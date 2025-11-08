@@ -1,80 +1,63 @@
-export function loadBasicCalculator() {
-  const app = document.getElementById("basic-calculator");
-  app.innerHTML = `
+// basicCalc.js — simple calculator view for SmartCalc Pro
+
+export function loadBasicCalc(container) {
+  container.innerHTML = `
     <div class="calculator">
-      <input type="text" id="display" readonly>
+      <input type="text" id="display" readonly class="display" />
       <div class="buttons">
-        <button>C</button>
-        <button>DEL</button>
-        <button>%</button>
-        <button>/</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>*</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>-</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>+</button>
-        <button>ANS</button>
-        <button>0</button>
-        <button>.</button>
-        <button>=</button>
+        <button class="btn" data-action="clear">AC</button>
+        <button class="btn" data-action="delete">DEL</button>
+        <button class="btn" data-value="%">%</button>
+        <button class="btn" data-value="/">÷</button>
+
+        <button class="btn" data-value="7">7</button>
+        <button class="btn" data-value="8">8</button>
+        <button class="btn" data-value="9">9</button>
+        <button class="btn" data-value="*">×</button>
+
+        <button class="btn" data-value="4">4</button>
+        <button class="btn" data-value="5">5</button>
+        <button class="btn" data-value="6">6</button>
+        <button class="btn" data-value="-">−</button>
+
+        <button class="btn" data-value="1">1</button>
+        <button class="btn" data-value="2">2</button>
+        <button class="btn" data-value="3">3</button>
+        <button class="btn" data-value="+">+</button>
+
+        <button class="btn" data-value="0">0</button>
+        <button class="btn" data-value=".">.</button>
+        <button class="btn" data-action="ans">ANS</button>
+        <button class="btn equal" data-action="equals">=</button>
       </div>
     </div>
   `;
 
-  const display = document.getElementById("display");
-  const buttons = app.querySelectorAll("button");
-  let currentInput = "";
-  let lastAnswer = "0";
+  const display = container.querySelector("#display");
+  let lastAnswer = "";
 
-  // Utility function to safely evaluate expressions
-  function safeEval(expr) {
-    try {
-      return Function(`'use strict'; return (${expr})`)();
-    } catch {
-      return "Error";
-    }
-  }
-
-  buttons.forEach((btn) => {
+  container.querySelectorAll(".btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const value = btn.textContent;
+      const value = btn.dataset.value;
+      const action = btn.dataset.action;
 
-      if (value === "C") {
-        currentInput = "";
-      } 
-      else if (value === "DEL") {
-        currentInput = currentInput.slice(0, -1);
-      } 
-      else if (value === "ANS") {
-        currentInput += lastAnswer;
-      } 
-      else if (value === "=") {
+      if (value) {
+        display.value += value;
+      } else if (action === "clear") {
+        display.value = "";
+      } else if (action === "delete") {
+        display.value = display.value.slice(0, -1);
+      } else if (action === "equals") {
         try {
-          let expression = currentInput;
-
-          // Handle percentages properly
-          expression = expression.replace(/(\d+(\.\d+)?)%/g, "($1/100)");
-
-          const result = safeEval(expression);
-          lastAnswer = result.toString();
-          currentInput = lastAnswer;
+          const result = Function(`"use strict"; return (${display.value.replace(/÷/g,"/").replace(/×/g,"*")})`)();
+          display.value = result;
+          lastAnswer = result;
         } catch {
-          currentInput = "Error";
+          display.value = "Error";
         }
-      } 
-      else {
-        currentInput += value;
+      } else if (action === "ans") {
+        display.value += lastAnswer;
       }
-
-      display.value = currentInput;
-      display.scrollLeft = display.scrollWidth; // Auto-scroll to end
     });
   });
 }

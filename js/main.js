@@ -1,8 +1,24 @@
-import { loadNavbar, loadFooter } from './utils.js';
-import { loadBasicCalculator } from './calculator.js';
+// main.js — entry point that loads header, footer, and calculators
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadNavbar();
+import { loadHeader, loadFooter } from "./utils.js";
+import { loadBasicCalc } from "./calculator.js";
+import { loadScientificCalc } from "./scientific.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadHeader();
   loadFooter();
-  loadBasicCalculator(); // Default view
+
+  const container = document.getElementById("basic-calculator");
+
+  // handle nav switches
+  document.getElementById("navbar").addEventListener("click", (e) => {
+    const btn = e.target.closest(".nav-btn");
+    if (!btn) return;
+    const tab = btn.dataset.tab;
+    if (tab === "basic") loadBasicCalc(container);
+    else if (tab === "scientific") loadScientificCalc(container);
+  });
+
+  // default tab
+  loadBasicCalc(container);
 });
