@@ -1,0 +1,94 @@
+/* css/dateCalc.css */
+
+.date-time-calculator {
+  width: 420px;
+  max-width: 95%;
+  margin: 2rem auto;
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(145deg,#1e1e2f,#151522);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  font-family: 'Poppins', sans-serif;
+}
+
+.dt-title {
+  margin: 0 0 12px 0;
+  font-size: 1.25rem;
+  color: #00ffc8;
+}
+
+.dt-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.dt-tab {
+  background: #2b2b3d;
+  border: none;
+  color: #ccc;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dt-tab.active {
+  background: linear-gradient(90deg,#00ffc8,#00b894);
+  color: #012;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(0,255,200,0.12);
+}
+
+.dt-panels .dt-panel {
+  display: none;
+  gap: 8px;
+}
+
+.dt-panels .dt-panel.active {
+  display: block;
+}
+
+.dt-panel label {
+  display: block;
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-top: 8px;
+}
+
+.dt-panel input[type="date"],
+.dt-panel input[type="time"],
+.dt-panel input[type="number"],
+.dt-panel select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #22232f;
+  color: #fff;
+  margin-top: 6px;
+  box-sizing: border-box;
+}
+
+.dt-action {
+  margin-top: 12px;
+  background: #00b894;
+  color: #012;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.dt-action:hover {
+  filter: brightness(1.05);
+}
+
+.dt-result {
+  margin-top: 12px;
+  background: rgba(255,255,255,0.03);
+  padding: 10px;
+  border-radius: 8px;
+  color: #d7fff0;
+}

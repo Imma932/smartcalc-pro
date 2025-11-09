@@ -1,30 +1,28 @@
-// js/utils.js
+// js/utils.js  
+export function loadHeader() {  
+  const header = document.getElementById("navbar");  
+  if (!header) return;
 
-/** Loads the header (navbar) into the #navbar element */
-export function loadHeader() {
-  const header = document.getElementById("navbar");
-  header.innerHTML = `
-    <div class="nav-container">
-      <h1 class="logo">🧮 SmartCalc Pro</h1>
-      <nav class="nav-links">
-        <button class="nav-btn" data-tab="basic">Basic</button>
-        <button class="nav-btn" data-tab="scientific">Scientific</button>
-      </nav>
-    </div>
-  `;
-}
+  header.innerHTML = `  
+    <header class="nav-bar">  
+      <h1 class="logo">SmartCalc Pro</h1>  
+      <div class="nav-buttons">  
+        <button class="nav-btn active" data-tab="basic">Basic</button>  
+        <button class="nav-btn" data-tab="scientific">Scientific</button>  
+        <button class="nav-btn" data-tab="date">Date</button>  
+        <button class="nav-btn" data-tab="converter">Unit Conversion</button>  
+      </div>  
+    </header>  
+  `;  
+}  
+  
+export function loadFooter() {  
+  const footer = document.getElementById("footer");  
+  if (!footer) return;
 
-/** Loads footer into the #footer element */
-export function loadFooter() {
-  const footer = document.getElementById("footer");
-  footer.innerHTML = `
-    <p>© ${new Date().getFullYear()} SmartCalc Pro — All rights reserved.</p>
-  `;
-}
-
-/** Clears all child nodes from a DOM element */
-export function clearElement(el) {
-  while (el.firstChild) {
-    el.removeChild(el.firstChild);
-  }
+  footer.innerHTML = `  
+    <footer class="app-footer">  
+      <p>© ${new Date().getFullYear()} SmartCalc Pro | Designed by Immanuel Mbugua</p>  
+    </footer>  
+  `;  
 }

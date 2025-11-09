@@ -1,58 +1,147 @@
-// scientificCalc.js — builds scientific calculator UI and links to MathEngine
-
+// js/scientificCalc.js
+// Scientific UI (updated 4-column layout + better functionality)
 import { MathEngine } from "./engine/mathEngine.js";
 
 export function loadScientificCalc(container) {
   container.innerHTML = `
-    <div class="calculator scientific">
-      <input type="text" id="sci-display" readonly class="display" />
-      <div class="sci-buttons"></div>
+    <div class="scientific-calculator">
+      <div class="calc-display" id="sci-display">
+        <div class="expression" id="sci-expression"></div>
+        <div class="result" id="sci-result"></div>
+      </div>
+
+      <div class="sci-buttons" id="sci-buttons"></div>
     </div>
   `;
 
   const engine = new MathEngine();
-  const display = container.querySelector("#sci-display");
-  const buttons = container.querySelector(".sci-buttons");
+  const exprEl = container.querySelector("#sci-expression");
+  const resEl = container.querySelector("#sci-result");
+  const buttonsEl = container.querySelector("#sci-buttons");
 
+  // === Layout (4 columns) ===
   const btnLayout = [
-    ["AC", "DEL", "(", ")", "÷"],
-    ["sin", "cos", "tan", "π", "%"],
-    ["7", "8", "9", "×", "^"],
-    ["4", "5", "6", "−", "√"],
-    ["1", "2", "3", "+", "x²"],
-    ["0", ".", "ANS", "=", "log"]
+    ["AC", "DEL", "(", ")"],
+    ["sin(", "cos(", "tan(", "√("],
+    ["asin(", "acos(", "atan(", "ln("],
+    ["sinh(", "cosh(", "tanh(", "log("],
+    ["x²", "x³", "x⁻¹", "n!"],
+    ["10^(", "e^(", "π", "E"],
+    ["7", "8", "9", "÷"],
+    ["4", "5", "6", "×"],
+    ["1", "2", "3", "−"],
+    ["0", ".", "%", "+"],
+    ["ANS", "Rand", "^", "="]
   ];
 
-  // build button grid
-  buttons.innerHTML = btnLayout
-    .map(
-      (row) =>
-        `<div class="row">${row
-          .map(
-            (label) =>
-              `<button class="btn" data-value="${label}">${label}</button>`
-          )
-          .join("")}</div>`
-    )
-    .join("");
+  // Build grid (4 columns)
+  buttonsEl.innerHTML = btnLayout
+    .map(row => row.map(label =>
+      `<button class="btn" data-value="${encodeURIComponent(label)}">${label}</button>`
+    ).join("")).join("");
 
+  let expression = "";
   let lastAnswer = "";
 
-  buttons.querySelectorAll(".btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const val = btn.dataset.value;
+  const decode = v => decodeURIComponent(v);
 
-      if (val === "AC") display.value = "";
-      else if (val === "DEL") display.value = display.value.slice(0, -1);
-      else if (val === "=") {
-        const result = engine.evaluate(display.value);
-        display.value = result;
-        lastAnswer = result;
-      } else if (val === "ANS") display.value += lastAnswer;
-      else if (val === "π") display.value += "π";
-      else if (val === "√") display.value += "sqrt(";
-      else if (val === "x²") display.value += "^2";
-      else display.value += val;
+  // === Normalize visual tokens for engine ===
+  function normalizeExpression(expr) {
+    let e = expr;
+    e = e.replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-");
+    e = e.replace(/π/g, "π").replace(/\bE\b/g, "E");
+    return e;
+  }
+
+  // === Update display & live preview ===
+  function updateUI() {
+    exprEl.textContent = expression || "0";
+    try {
+      const preview = engine.evaluate(normalizeExpression(expression));
+      resEl.textContent = preview !== "Error" ? preview : "";
+    } catch {
+      resEl.textContent = "";
+    }
+  }
+
+  // === Click Handlers ===
+  buttonsEl.querySelectorAll(".btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const val = decode(btn.dataset.value);
+
+      switch (val) {
+        case "AC":
+          expression = "";
+          resEl.textContent = "";
+          break;
+        case "DEL":
+          expression = expression.slice(0, -1);
+          break;
+        case "=":
+          try {
+            const result = engine.evaluate(normalizeExpression(expression));
+            resEl.textContent = result;
+            lastAnswer = String(result);
+            expression = String(result);
+          } catch {
+            resEl.textContent = "Error";
+            expression = "";
+          }
+          break;
+        case "ANS":
+          expression += lastAnswer || "0";
+          break;
+        case "√(":
+          expression += "sqrt(";
+          break;
+        case "x²":
+          expression += "^2";
+          break;
+        case "x³":
+          expression += "^3";
+          break;
+        case "x⁻¹":
+          expression += "^-1";
+          break;
+        case "n!":
+          expression += "factorial(";
+          break;
+        case "10^(":
+        case "e^(":
+          expression += val;
+          break;
+        case "Rand":
+          expression += "random()";
+          break;
+        default:
+          expression += val;
+      }
+
+      updateUI();
     });
   });
+
+  // === Keyboard Support ===
+  window.addEventListener("keydown", (ev) => {
+    const key = ev.key;
+    if (/^[0-9+\-*/().%]$/.test(key)) {
+      expression += key;
+      updateUI();
+    } else if (key === "Enter") {
+      try {
+        const result = engine.evaluate(normalizeExpression(expression));
+        resEl.textContent = result;
+        lastAnswer = String(result);
+        expression = String(result);
+      } catch {
+        resEl.textContent = "Error";
+        expression = "";
+      }
+    } else if (key === "Backspace") {
+      expression = expression.slice(0, -1);
+      updateUI();
+    }
+  });
+
+  updateUI();
 }
