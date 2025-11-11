@@ -5,6 +5,7 @@ import { MathEngine } from "./engine/mathEngine.js";
 export function loadScientificCalc(container) {
   container.innerHTML = `
     <div class="scientific-calculator">
+      <h1 class="logo-calc">SmartCalc Pro</h1>
       <div class="calc-display" id="sci-display">
         <div class="expression" id="sci-expression"></div>
         <div class="result" id="sci-result"></div>
@@ -30,7 +31,7 @@ export function loadScientificCalc(container) {
     ["7", "8", "9", "÷"],
     ["4", "5", "6", "×"],
     ["1", "2", "3", "−"],
-    ["0", ".", "%", "+"],
+    [".", "0", "%", "+"],
     ["ANS", "Rand", "^", "="]
   ];
 

@@ -10,7 +10,7 @@ export function loadHeader() {
         <button class="nav-btn active" data-tab="basic">Basic</button>  
         <button class="nav-btn" data-tab="scientific">Scientific</button>  
         <button class="nav-btn" data-tab="date">Date</button>  
-        <button class="nav-btn" data-tab="converter">Unit Conversion</button>  
+        <button class="nav-btn" data-tab="converter">Units</button>  
       </div>  
     </header>  
   `;  

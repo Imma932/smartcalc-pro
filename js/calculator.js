@@ -3,6 +3,7 @@
 export function loadBasicCalc(container) {
   container.innerHTML = `
     <div class="calculator">
+      <h1 class="logo-calc">SmartCalc Pro</h1>
       <input type="text" id="display" readonly class="display" />
       <div class="buttons">
         <button class="btn" data-action="clear">AC</button>

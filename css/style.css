@@ -11,7 +11,6 @@ header, #footer {
 }
 
 #navbar {
-  width: 100%;
   background: linear-gradient(135deg, #1e1e2f, #23233a);
   border-bottom: 2px solid #00b894;
   margin-bottom: 20px;
@@ -19,12 +18,14 @@ header, #footer {
   box-shadow: 0 4px 8px rgba(0,0,0,0.25);
 }
 .nav-btn{
-  margin-bottom: 10px;
+  margin: 5px  5px 20px 0px;
+  background-color: #6c5ce7;
 }
 
 #footer {
-  margin-top: 40px;
-  margin-bottom: 0;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
   padding-bottom: 10px;
   background: #1e1e2f;
   font-size: 0.9rem;
@@ -34,12 +35,18 @@ header, #footer {
   opacity: 0.9;
 }
 
-.logo {
+.logo, .logo-calc {
   font-size: 1.6rem;
   margin: 0;
   color: #00b894;
+  text-align: center;
+ 
 }
-
+.logo-calc{
+  font-size: 2.4em;
+  padding: 10px;
+  margin: 10px;
+}
 .tagline {
   font-size: 0.9rem;
   color: #ccc;
@@ -47,7 +54,7 @@ header, #footer {
 .calculator {
   width: 100%;
   max-width: 360px;
-  margin: 3rem auto;
+  margin: 4rem auto;
   background: #1e1e2f;
   border-radius: 25px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -104,17 +111,17 @@ button {
 }
 
 /* === Button Color Categories === */
-button:nth-child(1) {
+.calculator button:nth-child(1) {
   background: #e74c3c;
 }
 
 /* C */
-button:nth-child(2) {
+.calculator button:nth-child(2){
   background: #f39c12;
 }
 
 /* DEL */
-button:nth-child(3), button:nth-child(4),
+.calculator button:nth-child(3), .calculator button:nth-child(4),
 button:nth-child(8), button:nth-child(12),
 button:nth-child(16), button:nth-child(20), button:nth-child(24), button:nth-child(28), button:nth-child(32), button:nth-child(36) {
   background: #00b894;
@@ -177,9 +184,9 @@ button:active {
 }
 /* === SCIENTIFIC CALCULATOR STYLING === */
 .scientific-calculator {
-  width: 420px;
+  width: 280px;
   max-width: 90%;
-  margin: 2rem auto;
+  margin: 4rem auto;
   background: linear-gradient(145deg, #1e1e2f, #151522);
   border-radius: 25px;
   padding: 25px;
@@ -318,7 +325,7 @@ button:hover {
 /* css/dateCalc.css */
 
 .date-time-calculator {
-  width: 420px;
+  width: 280px;
   max-width: 95%;
   margin: 2rem auto;
   padding: 18px;
@@ -372,10 +379,10 @@ button:hover {
   color: #bbb;
   margin-top: 8px;
 }
-
 .dt-panel input[type="date"],
 .dt-panel input[type="time"],
 .dt-panel input[type="number"],
+.dt-panel input[type="text"],
 .dt-panel select {
   width: 100%;
   padding: 8px;
@@ -386,7 +393,17 @@ button:hover {
   margin-top: 6px;
   box-sizing: border-box;
 }
-
+.dt-panel input[type="date"]:focus,
+.dt-panel input[type="time"]:focus,
+.dt-panel input[type="number"]:focus,
+.dt-panel input[type="text"]:focus,
+.dt-panel select:focus{
+  outline: none;
+  border: inset 1.4px display: block;
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-top: 8px #00b894;
+}
 .dt-action {
   margin-top: 12px;
   background: #00b894;
@@ -569,8 +586,7 @@ button:hover {
   gap: 10px;
 }
 
-.converter-row input,
-.converter-row select {
+.converter-row input, select {
   flex: 1;
   padding: 12px;
   border: none;
@@ -645,4 +661,30 @@ button:hover {
     font-size: 1rem;
     padding: 12px;
   }
+}
+.btn:nth-child(1) {
+  background: #e74c3c;
+}
+
+/* C */
+.btn:nth-child(2){
+  background: #f39c12;
+}
+
+.btn:nth-child(28), 
+.btn:nth-child(32), .btn:nth-child(36),
+.btn:nth-child(40), .btn:nth-child(42),
+.btn:nth-child(43), .btn:nth-child(37),
+.btn:nth-child(39){
+  background: #00b894;
+}
+.btn:nth-child(25), .btn:nth-child(26),
+.btn:nth-child(27),.btn:nth-child(29),
+.btn:nth-child(30), .btn:nth-child(31),
+.btn:nth-child(33), .btn:nth-child(34),
+.btn:nth-child(35), .btn:nth-child(38){
+  background: #0984e3;
+}
+.btn:nth-child(41), .btn:nth-child(44) {
+  background: #6c5ce7;
 }
