@@ -23,7 +23,6 @@ import {
 export function loadDateCalc(container) {
   container.innerHTML = `
   <div class="date-time-calculator enhanced">
-  <h1 class="logo-calc">SmartCalc Pro</h1>
   <h2 class="dt-title">🗓️ Date & Time Calculator</h2>
 
   <div class="dt-tabs" role="tablist">

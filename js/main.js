@@ -4,8 +4,18 @@ import { loadBasicCalc } from "./calculator.js";
 import { loadScientificCalc } from "./scientific.js";
 import { loadDateCalc } from "./dateCalc.js";
 import{ loadConverter} from "./convertor.js";
+import{loadCurrencyCalculator } from "./currency.js";
+import{loadGraphCalculator} from "./graph.js"
 document.addEventListener("DOMContentLoaded", () => {
   loadHeader();
+  document.addEventListener("click", (e) => {
+    const dropdown = document.querySelector(".dropdown");
+    if (e.target.matches(".dropdown-btn")) {
+     dropdown.classList.toggle("show");
+    } else {
+     dropdown.classList.remove("show");
+   }
+  }); 
   loadFooter();
 
   const container = document.getElementById("basic-calculator");
@@ -20,6 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (tab === "date") loadDateCalc(container);
     else if(tab === "converter")
       loadConverter(container);
+    else if(tab === "currency")
+      loadCurrencyCalculator(container);
+    else if(tab === "graph")
+      loadGraphCalculator(container);
   });
 
   // default: basic
